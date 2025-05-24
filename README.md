@@ -1,84 +1,83 @@
-# Turborepo starter
+# YouGoPay
 
-This Turborepo starter is maintained by the Turborepo core team.
+A microservices-based application for managing group savings and rotating credit associations.
 
-## Using this example
-
-Run the following command:
-
-```sh
-npx create-turbo@latest
-```
-
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+## Project Structure
 
 ```
-cd my-turborepo
-pnpm build
+/apps
+├── api-gateway/          # API Gateway service
+├── services/            # Microservices
+│   ├── auth/           # Authentication service
+│   ├── user/           # User management service
+│   ├── group/          # Group management service
+│   ├── payment/        # Payment processing service
+│   ├── payout-orchestrator/ # Payout orchestration service
+│   └── notification/   # Notification service
+└── docs/               # Documentation
+
+/packages              # Shared packages
+├── config/            # Configuration management
+├── prisma/            # Database schema and client
+├── logger/            # Logging utilities
+├── common/            # Shared utilities and types
+├── truelayer-sdk/     # TrueLayer API integration
+├── security/          # Security utilities
+├── compliance/        # Compliance utilities
+├── monitoring/        # Monitoring utilities
+└── tracing/           # Distributed tracing
+
+/docker               # Docker configuration
+└── Dockerfiles/      # Service-specific Dockerfiles
+
+/docs                 # Project documentation
+├── api/             # API documentation
+├── architecture/    # Architecture diagrams
+├── deployment/      # Deployment guides
+└── security/        # Security documentation
+
+/e2e                 # End-to-end tests
 ```
 
-### Develop
+## Prerequisites
 
-To develop all apps and packages, run the following command:
+- Node.js >= 18
+- Docker and Docker Compose
+- PostgreSQL
+- Redis
 
-```
-cd my-turborepo
-pnpm dev
-```
+## Getting Started
 
-### Remote Caching
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Copy the environment file:
+   ```bash
+   cp apps/.env.example apps/.env
+   ```
+4. Start the development environment:
+   ```bash
+   docker-compose up
+   ```
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+## Development
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+- Each service is independently deployable
+- Services communicate via HTTP/REST
+- Shared code is maintained in the packages directory
+- Each service has its own Dockerfile
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+## Testing
 
-```
-cd my-turborepo
-npx turbo login
-```
+- Unit tests: `npm run test`
+- Integration tests: `npm run test:integration`
+- E2E tests: `npm run test:e2e`
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+## Documentation
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+- API documentation is available in `/docs/api`
+- Architecture documentation is available in `/docs/architecture`
+- Deployment guides are available in `/docs/deployment`
+- Security documentation is available in `/docs/security`
