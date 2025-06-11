@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
+import prisma from './config/database';
 
 // Load environment variables
 dotenv.config();
@@ -41,6 +42,19 @@ app.use((err: Error, req: express.Request, res: express.Response, next: express.
     status: 'error',
     message: 'Something went wrong!'
   });
+});
+
+// Graceful shutdown
+process.on('SIGTERM', async () => {
+  console.log('SIGTERM received. Closing HTTP server and database connection...');
+  await prisma.$disconnect();
+  process.exit(0);
+});
+
+process.on('SIGINT', async () => {
+  console.log('SIGINT received. Closing HTTP server and database connection...');
+  await prisma.$disconnect();
+  process.exit(0);
 });
 
 export default app; 

@@ -12,7 +12,7 @@ router.post(
     body('password')
       .isLength({ min: 6 })
       .withMessage('Password must be at least 6 characters long'),
-    body('name').notEmpty().withMessage('Name is required'),
+    // body('name').notEmpty().withMessage('Name is required'),
   ],
   register
 );
